@@ -214,7 +214,7 @@ class ContractClient(_APIClient):
             "action": "verifysourcecode",
             "codeformat": code_format,
             "compilerversion": compiler_version,
-            "constructorArguements": constructor_arguments,
+            "constructorArguments": constructor_arguments,
             "contractaddress": self._address,
             "contractname": contract_name,
             "evmversion": evm_version,

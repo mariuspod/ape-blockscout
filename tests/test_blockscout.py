@@ -1,5 +1,3 @@
-from typing import Callable
-
 import pytest
 
 from ape_blockscout import NETWORKS
@@ -52,71 +50,6 @@ base_url_test = pytest.mark.parametrize(
         ("polygon", "mainnet-fork", "polygon.blockscout.com"),
     ],
 )
-
-
-@pytest.fixture
-def verification_tester_cls():
-    class VerificationTester:
-        counter = 0
-
-        def __init__(self, action_when_found: Callable, threshold: int = 2):
-            self.action_when_found = action_when_found
-            self.threshold = threshold
-
-        def sim(self):
-            # Simulate the contract type waiting in the queue until successful verification
-            if self.counter == self.threshold:
-                return self.action_when_found()
-
-            self.counter += 1
-            return "Pending in the queue"
-
-    return VerificationTester
-
-
-@pytest.fixture
-def setup_verification_test(
-    mock_backend, verification_params, verification_tester_cls, address_to_verify
-):
-    def setup(found_handler: Callable, threshold: int = 2):
-        mock_backend.setup_mock_account_transactions_response(address=address_to_verify)
-        mock_backend.add_handler("POST", "contract", verification_params, return_value=PUBLISH_GUID)
-        verification_tester = verification_tester_cls(found_handler, threshold=threshold)
-        mock_backend.add_handler(
-            "GET",
-            "contract",
-            {"guid": PUBLISH_GUID},
-            side_effect=verification_tester.sim,
-        )
-        return verification_tester
-
-    return setup
-
-
-@pytest.fixture
-def setup_verification_test_with_ctor_args(
-    mock_backend,
-    verification_params_with_ctor_args,
-    verification_tester_cls,
-    address_to_verify_with_ctor_args,
-):
-    def setup(found_handler: Callable, threshold: int = 2):
-        mock_backend.setup_mock_account_transactions_with_ctor_args_response(
-            address=address_to_verify_with_ctor_args
-        )
-        mock_backend.add_handler(
-            "POST", "contract", verification_params_with_ctor_args, return_value=PUBLISH_GUID
-        )
-        verification_tester = verification_tester_cls(found_handler, threshold=threshold)
-        mock_backend.add_handler(
-            "GET",
-            "contract",
-            {"guid": PUBLISH_GUID},
-            side_effect=verification_tester.sim,
-        )
-        return verification_tester
-
-    return setup
 
 
 @base_url_test

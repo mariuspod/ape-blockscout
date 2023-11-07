@@ -54,6 +54,5 @@ export POLYGON_BLOCKSCOUT_API_KEY=SAMPLE_KEY
 
 ## Development
 
-This project is in development and should be considered a beta.
-Things might not be in their final state and breaking changes may occur.
+Please see the [contributing guide](CONTRIBUTING.md) to learn more how to contribute to this project.
 Comments, questions, criticisms and pull requests are welcomed.

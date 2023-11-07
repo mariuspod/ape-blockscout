@@ -430,7 +430,7 @@ def verification_params(address_to_verify, standard_input_json):
     return {
         "action": "verifysourcecode",
         "codeformat": "solidity-standard-json-input",
-        "constructorArguements": ctor_args,
+        "constructorArguments": ctor_args,
         "contractaddress": address_to_verify,
         "contractname": "foo.sol:foo",
         "evmversion": None,
@@ -455,7 +455,7 @@ def verification_params_with_ctor_args(
     return {
         "action": "verifysourcecode",
         "codeformat": "solidity-standard-json-input",
-        "constructorArguements": ctor_args,
+        "constructorArguments": ctor_args,
         "contractaddress": address_to_verify_with_ctor_args,
         "contractname": "foo.sol:fooWithConstructor",
         "evmversion": None,

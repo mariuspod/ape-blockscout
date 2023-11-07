@@ -10,7 +10,7 @@ repos:
       - id: isort
 
 -   repo: https://github.com/psf/black
-    rev: 23.10.0
+    rev: 23.10.1
     hooks:
       - id: black
         name: black
@@ -24,7 +24,7 @@ repos:
     rev: v1.6.1
     hooks:
     -   id: mypy
-        additional_dependencies: [types-setuptools, types-requests,]
+        additional_dependencies: [types-setuptools, types-requests, pydantic]
 
 -   repo: https://github.com/executablebooks/mdformat
     rev: 0.7.17
