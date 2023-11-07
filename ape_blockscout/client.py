@@ -37,6 +37,7 @@ def get_blockscout_uri(ecosystem_name: str, network_name: str) -> str:
 class _APIClient(ManagerAccessMixin):
     DEFAULT_HEADERS = {"User-Agent": USER_AGENT}
     session: Session = Session()
+    ecosystem_name: str
 
     def __init__(self, ecosystem_name: str, network_name: str, module_name: str):
         self._ecosystem_name = ecosystem_name
