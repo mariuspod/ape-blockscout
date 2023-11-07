@@ -25,6 +25,7 @@ extras_require = {
         "mdformat>=0.7.17",  # Auto-formatter for markdown
         "mdformat-gfm>=0.3.5",  # Needed for formatting GitHub-flavored markdown
         "mdformat-frontmatter>=0.4.1",  # Needed for frontmatters-style headers in issue templates
+        "mdformat-pyproject>=0.0.1",  # Allows configuring in pyproject.toml
         "pydantic<2",  # Needed for successful type check
     ],
     "release": [  # `release` GitHub Action job uses this
