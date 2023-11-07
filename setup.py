@@ -10,12 +10,12 @@ extras_require = {
         "ape-infura",  # Needed for live network tests
         "ape-solidity",  # Needed for contract verification tests
         "pytest>=6.0",  # Core testing package
-        "pytest-xdist",  # multi-process runner
+        "pytest-xdist",  # Multi-process runner
         "pytest-cov",  # Coverage analyzer plugin
         "hypothesis>=6.2.0,<7.0",  # Strategy-based fuzzer
     ],
     "lint": [
-        "black>=23.10.0,<24",  # auto-formatter and linter
+        "black>=23.10.1,<24",  # Auto-formatter and linter
         "mypy>=1.6.1,<2",  # Static type analyzer
         "types-requests>=2.31.0",  # Needed due to mypy typeshed
         "types-setuptools",  # Needed for mypy type shed
