@@ -5,7 +5,7 @@ API_KEY_ENV_KEY_MAP = {
     "ethereum": "ETH_BLOCKSCOUT_API_KEY",
     "gnosis": "GNOSIS_BLOCKSCOUT_API_KEY",
     "optimism": "OPTIMISM_BLOCKSCOUT_API_KEY",
-    "polygon": "POLYGON__BLOCKSCOUT_API_KEY",
+    "polygon": "POLYGON_BLOCKSCOUT_API_KEY",
 }
 
 NETWORKS: Dict[str, List[str]] = {

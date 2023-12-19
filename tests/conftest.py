@@ -187,7 +187,7 @@ def get_explorer(mocker):
             network.name = network_name
             network.ecosystem = ecosystem
             blockscout = ape.networks.get_ecosystem("ethereum").get_network("mainnet")
-            explorer = Blockscout.construct(name=blockscout.name, network=network)
+            explorer = Blockscout.model_construct(name=blockscout.name, network=network)
             network.explorer = explorer
             explorer.network = network
         else:
