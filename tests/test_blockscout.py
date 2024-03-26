@@ -123,3 +123,11 @@ def test_get_contract_type_with_rate_limiting(mock_backend, explorer):
 def test_too_many_requests_error(no_api_key, response):
     actual = str(BlockscoutTooManyRequestsError(response, "ethereum"))
     assert "BLOCKSCOUT_API_KEY" in actual
+
+
+@pytest.mark.parametrize("ecosystem", ["base", "ethereum", "gnosis", "optimism", "polygon"])
+def test_config_ecosystem_exists(ecosystem):
+    from ape import config
+
+    cfg = config.get_config("blockscout")
+    assert hasattr(cfg, ecosystem), f"No configuration for ecosystem {ecosystem}"
