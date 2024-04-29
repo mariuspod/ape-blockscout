@@ -5,6 +5,7 @@ import time
 from io import StringIO
 from typing import Dict, Iterator, List, Optional
 
+from ape.api import PluginConfig
 from ape.logging import logger
 from ape.utils import USER_AGENT, ManagerAccessMixin
 from ape_blockscout.config import BlockscoutConfig
