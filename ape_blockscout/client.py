@@ -53,7 +53,8 @@ class _APIClient(ManagerAccessMixin):
     session: Session = Session()
     ecosystem_name: str
 
-    def __init__(self, ecosystem_name: str, network_name: str, module_name: str):
+    def __init__(self, blockscout_config: str, ecosystem_name: str, network_name: str, module_name: str):
+        self._blockscout_config = blockscout_config
         self._ecosystem_name = ecosystem_name
         self._network_name = network_name
         self._module_name = module_name
@@ -61,7 +62,7 @@ class _APIClient(ManagerAccessMixin):
 
     @property
     def base_uri(self) -> str:
-        return get_blockscout_uri(self._ecosystem_name, self._network_name) + "/api"
+        return get_blockscout_uri(self._blockscout_config, self._ecosystem_name, self._network_name) + "/api"
 
     @property
     def base_params(self) -> Dict:
@@ -166,12 +167,15 @@ class _APIClient(ManagerAccessMixin):
 
 
 class ContractClient(_APIClient):
-    def __init__(self, ecosystem_name: str, network_name: str, address: str):
+    def __init__(self, blockscout_config: str, ecosystem_name: str, network_name: str, address: str):
         self._address = address
         self.ecosystem_name = ecosystem_name
 
         super().__init__(
-            ecosystem_name=ecosystem_name, network_name=network_name, module_name="contract"
+            blockscout_config=blockscout_config,
+            ecosystem_name=ecosystem_name,
+            network_name=network_name,
+            module_name="contract"
         )
 
     def get_source_code(self) -> SourceCodeResponse:
@@ -266,12 +270,15 @@ class ContractClient(_APIClient):
 
 
 class AccountClient(_APIClient):
-    def __init__(self, ecosystem_name: str, network_name: str, address: str):
+    def __init__(self, blockscout_config: str, ecosystem_name: str, network_name: str, address: str):
         self._address = address
         self.ecosystem_name = ecosystem_name
 
         super().__init__(
-            ecosystem_name=ecosystem_name, network_name=network_name, module_name="account"
+            blockscout_config=blockscout_config,
+            ecosystem_name=ecosystem_name,
+            network_name=network_name,
+            module_name="account"
         )
 
     def get_all_normal_transactions(
@@ -321,12 +328,14 @@ class AccountClient(_APIClient):
 
 
 class ClientFactory:
-    def __init__(self, ecosystem_name: str, network_name: str):
+    def __init__(self, blockscout_config: str, ecosystem_name: str, network_name: str):
+        self._blockscout_config = blockscout_config
         self._ecosystem_name = ecosystem_name
         self._network_name = network_name
 
     def get_contract_client(self, contract_address: str) -> ContractClient:
         return ContractClient(
+            blockscout_config=self._blockscout_config,
             ecosystem_name=self._ecosystem_name,
             network_name=self._network_name,
             address=contract_address,
@@ -334,6 +343,7 @@ class ClientFactory:
 
     def get_account_client(self, account_address: str) -> AccountClient:
         return AccountClient(
+            blockscout_config=self._blockscout_config,
             ecosystem_name=self._ecosystem_name,
             network_name=self._network_name,
             address=account_address,

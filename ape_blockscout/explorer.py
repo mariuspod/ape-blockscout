@@ -37,6 +37,7 @@ class Blockscout(ExplorerAPI):
     @property
     def _client_factory(self) -> ClientFactory:
         return ClientFactory(
+            blockscout_config=self._config,
             ecosystem_name=self.network.ecosystem.name,
             network_name=self.network.name.replace("-fork", ""),
         )
