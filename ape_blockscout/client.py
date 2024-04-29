@@ -7,6 +7,7 @@ from typing import Dict, Iterator, List, Optional
 
 from ape.logging import logger
 from ape.utils import USER_AGENT, ManagerAccessMixin
+from ape_blockscout.config import BlockscoutConfig
 from requests import Session
 from yarl import URL
 
@@ -18,8 +19,20 @@ from ape_blockscout.exceptions import (
 from ape_blockscout.types import BlockscoutResponse, ContractCreationResponse, SourceCodeResponse
 from ape_blockscout.utils import API_KEY_ENV_KEY_MAP, NETWORKS
 
+def get_network_config(
+    blockscout_config: BlockscoutConfig, ecosystem_name: str, network_name: str
+) -> Optional[PluginConfig]:
+    if ecosystem_name in blockscout_config:
+        return blockscout_config[ecosystem_name].get(network_name)
+    return None
 
-def get_blockscout_uri(ecosystem_name: str, network_name: str) -> str:
+
+def get_blockscout_uri(blockscout_config: str, ecosystem_name: str, network_name: str) -> str:
+    # Look for explicitly configured Blockscout config
+    network_conf = get_network_config(blockscout_config, ecosystem_name, network_name)
+    if network_conf and hasattr(network_conf, "uri"):
+        return str(network_conf.uri)
+
     if ecosystem_name not in API_KEY_ENV_KEY_MAP.keys():
         raise UnsupportedEcosystemError(ecosystem_name)
 

@@ -2,7 +2,7 @@ import json
 from json.decoder import JSONDecodeError
 from typing import Optional
 
-from ape.api import ExplorerAPI
+from ape.api import ExplorerAPI, PluginConfig
 from ape.contracts import ContractInstance
 from ape.exceptions import APINotImplementedError, ProviderNotConnectedError
 from ape.logging import logger
@@ -12,8 +12,13 @@ from ape_blockscout.client import ClientFactory, get_blockscout_uri
 
 
 class Blockscout(ExplorerAPI):
+    @property
+    def _config(self) -> PluginConfig:
+        return self.config_manager.get_config("blockscout")
+
     def get_address_url(self, address: str) -> str:
         ecosystem_uri = get_blockscout_uri(
+            blockscout_config=self._config,
             ecosystem_name=self.network.ecosystem.name,
             network_name=self.network.name.replace("-fork", ""),
         )
@@ -22,6 +27,7 @@ class Blockscout(ExplorerAPI):
 
     def get_transaction_url(self, transaction_hash: str) -> str:
         ecosystem_uri = get_blockscout_uri(
+            blockscout_config=self._config,
             ecosystem_name=self.network.ecosystem.name,
             network_name=self.network.name.replace("-fork", ""),
         )
